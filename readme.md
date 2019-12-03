@@ -171,3 +171,105 @@ const st = `hey ${Math.random()} there`;
 
 **classes**
 **promises, async and await**
+
+- package-lock.json is for maintaining same version of packages downloaded in your application
+- npm version : (breaking change.minor change.bugfix)
+- ~ : latest bug fix(carret)
+- ^ : latest minor and bug fix(tilder)
+
+- eslint(airbnb)
+
+**node file**
+every node file if wrapped up with a function containing arguments:
+```
+// function(exports, module, require, __filename, __dirname) {
+    let g = 0; // will not be a global variable
+    console.log(arguments);
+
+//  return module.exports;
+// }
+```
+- exports & module - used to define API of the module, exports is an alias of module and shortens code. It will include all exports in the module and that becomes our api e.g. ```exports.a = 42 is same as module.exports.a = 42```
+- require - used to require other modules
+- __filename - has the path of this file
+- __dirname - has the path to the folder hosting this file
+
+- this wrapper function is the reason defning a variable on top level will only be available within that file unlike in browsers that don't have this hidden wrapping function
+
+- note ```exports = () => {}``` will reassign the alias, not really modifying the module and that is not desirable but you can do : ```module.exports = () => {}```
+
+**node gloabal object**
+global keyname in node is equivalent to browser window object
+```
+global.val = 42; // you can access this from any other file within your package either as `global.val` or simply as `val`
+```
+- for example, setInterval is a global function
+
+**node clusters**
+node should be run in a cluster of nodes to avoid one node process exiting from exiting the whole app.
+- all node processes should have a master process to monitor the rest
+- you can run node clusters using the built in cluster module or using a tool like pm2 that wraps the cluster module
+- pm2 will automatically use all the available cores in your server and will also spoon other processes while others crash, it also reloads application
+
+**promisify**
+- the downside of call backs is the need for nesting functions (pyramid of doom)
+- callback vs promise pattern
+- you can promisify any callback function using some library
+
+```
+const fs = require('fs');
+fs.readFile(__filaname, (err, data) => {
+    fs.writeFile(__filename+'.copy', (err)=>{
+        //nest more
+    })
+})
+```
+
+to change this into a promise, you can do this:
+
+```
+const fs = require('fs');
+const util = require('util');
+const readFile = util.promisify(fs.readFile);
+const writeFile = util.promisify(fs.writeFile);
+async function main() {
+    const data = await readFile(__filename);
+    console.log('file data is', data);
+    await fs.writeFile(__filename+'.copy', data);
+}
+main();
+```
+
+also fs supports built in promises so you can do this:
+
+```
+const fs = require('fs').promises;
+async funtion main() {
+    const data = await fs.readFile(__filename);
+    await fs.writeFile(__filename+'.copy', data);
+}
+main();
+```
+
+**event emitters**
+```
+const EventEmitter = require('events');
+
+const myEmitter = new EventEmitter();
+
+setImmediate(()=>{
+    myEmmiter.emit('test');
+});
+
+myEmitter.on('test', () => {
+    console.log('test event');
+});
+
+myEmitter.on('test', () => {
+    console.log('test event');
+});
+
+myEmitter.on('test', () => {
+    console.log('test event');
+});
+```
