@@ -273,3 +273,36 @@ myEmitter.on('test', () => {
     console.log('test event');
 });
 ```
+
+**node modules**
+- os
+- fs
+- child process
+
+**child process**
+- this module provides 4 main methods that allow executing shell commands inside a node process
+- spawn is the best among them. below is a few examples on how its used
+```
+const { spawn } = require('child_process');
+
+// print working directory
+const pwd = spwan('pwd');
+pwd.stdout.pipe(process.stdout);
+
+// read content of a file
+const { HOME } = process.env;
+const cat = spawn('cat', [`${HOME}/.bash_profile`]);
+cat.stdout.pipe(process.stdout);
+
+// list files
+const ls = spawn('ls', ['-l', '.']);
+ls.stdout.pipe(process.stdout);
+
+// use shell syntax
+const shell = spawn('ls -al ~ | wc -l', {shell: true});
+shell.stdout.pipe(process.stdout);
+```
+
+**debugging**
+using chrome tools
+- execute your code with `node --inspect-brk app.js` and visit `chrome://inspect` where you can place break points and play your code
