@@ -25,6 +25,19 @@ console.log(buffer, buffer.lenght); /*
  string is counting characters based on the default 'utf-8' encoding 
 */
 
+// Example
+const {StringDecoder} = require('string_decoder');
+const decoder = new StringDecoder('utf8');
+
+process.stdin.on('readable', () => {
+    const chunk = process.stdin.read();
+    if (chunk != null) {
+        const buffer = Buffer.from([chunk]);
+        console.log('With .toString():', buffer.toString()); // input: 0*AC , output: ?
+        console.log('with stringDecoder', decoder.write(buffer)); // input: 0*AC , output: euro sign
+    }
+});
+
 /**
  * buffers are useful when we need to read things like an image file from a tcp stream or a compressed file or any other form
  * of binary data access
