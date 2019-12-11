@@ -50,4 +50,5 @@ process.stdin.on('readable', () => {
   * when converting streams of binary data, you should always use the 'StringDecoder' module because it handles multibyte character
   * much better especially incomplete multybyte. unlike the built in Buffer.toString, 'StringDecoder' preseves the incomplete encoded
   * characters until and then returns the result
+  - in general, if you receiving uft8 chunk in a stream, you should always use StringDecoder
   */
