@@ -66,3 +66,10 @@
       * and dequeue callbacks from the event queue into the call stack which gives v8 back the control to execute the contents of those callbacks
       * 
       */
+
+      /**
+       * callbacks does not equate to asynchrony
+       * 
+       * sometimes a function can call a call back synchronously but you can make it calls it asynchronously with the process.nextTick
+       * 
+       */
