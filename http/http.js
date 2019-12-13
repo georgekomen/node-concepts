@@ -10,6 +10,7 @@
   */
 
 const fs = require('fs');
+// server: http.Server class
 const server = require('https')
     .createServer({
         key: fs.readFileSync('./key.pem'),
@@ -17,6 +18,8 @@ const server = require('https')
     });
 
 server.on('request', (req, res) => {
+    // req: http.IncomingMessage class
+    // res: http.ServerResponse class
     res.writeHead(200, { 'content-type': 'text/plain' });
     res.end('Hello world\n');
 });
