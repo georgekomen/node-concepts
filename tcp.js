@@ -1,5 +1,8 @@
 // a simple chat server
 
+// tcp is best for emails, ssh, http and ftp
+//udp is best for broadcasting, streaming, gaming, tunneling
+
 /**
  * this is a basic network server example using the net's module createServer method that gives a server object
  * 
@@ -29,6 +32,7 @@ server.on('connection', socket => {
         Object.entries(sockets).forEach(([key, client_socket]) => {
             console.log('data is: ', data); //buffer because reading doesn't assume any encoding
     
+            if(socket.id === key) return; // do not echo back message to the sender
             // echo data back to client
             client_socket.write(`from ${socket.id} : `);
             client_socket.write(data); // write assumes utf8 encoding so the user receives back a string
