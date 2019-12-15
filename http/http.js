@@ -20,6 +20,8 @@ const server = require('https')
 server.on('request', (req, res) => {
     // req: http.IncomingMessage class
     // res: http.ServerResponse class
+
+    // url can be read with req.url
     res.writeHead(200, { 'content-type': 'text/plain' });
     res.end('Hello world\n');
 });
