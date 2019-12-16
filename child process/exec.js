@@ -7,7 +7,6 @@
  * exec is a better choice if you need to use the shell syntax but spawn is good if the output of a command is big
  * because that data will be streamed with the standard IO objects
  * 
- * 
  * If you want to execute a file without using a shell then use execFile
  * It behaves exactly like exec but does not use shell
  */
