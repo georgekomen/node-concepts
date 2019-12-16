@@ -16,5 +16,4 @@
  });
  process.stdin.pipe(outStream); // consume the stream
 
- // the above is same as :
- process.stdin.pipe(process.stdout);
+ // the above is same as : process.stdin.pipe(process.stdout);
