@@ -1,3 +1,11 @@
+/**
+ * This example shows a meaningful use of transform streams
+ * It also shows how you can pipe several functionalities e.g.
+ * -compression
+ * -reporting with events
+ * -encryption with crypto module
+ */
+
 const fs = require('fs');
 const crypto = require('crypto');
 const zlib = require('zlib');
