@@ -27,11 +27,20 @@ if(cluster.isMaster) {
         cluster.fork();
     }
 
+    // broadcast message to forked processes
     setInterval(() => {
         Object.values(cluster.workers).forEach(worker => {
             worker.send({ status: status++});
         });
     }, 1000);
+
+    // handle crash
+    cluster.on('exit', (worker, code, signal) => {
+        if (code !== 0 && !worker.exitedAfterDisconnect) {
+            console.log(`worker ${worker.id} crashed. Starting a new worker`);
+            cluster.fork();
+        }
+    })
 
 } else {
     require('./server');
